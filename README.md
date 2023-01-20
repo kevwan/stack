@@ -4,7 +4,10 @@ A cli tool to prettify stacktrace in json logs.
 ## Why to write this tool?
 When we read the stacktrace info from json logs, it's hard to read without pretty print.
 
-## From stdin
+## Usage
+
+### 1. From stdin
+
 ```json
 {"@timestamp":"2023-01-20T19:56:57.806+08:00","content":"panic\ngoroutine 1 [running]:\nruntime/debug.Stack()\n\t/usr/local/go/src/runtime/debug/stack.go:24 +0x64\ngithub.com/zeromicro/go-zero/core/logx.writeStack({0x14000092008, 0x5})\n\t/Users/kevin/Develop/go/opensource/go-zero/core/logx/logs.go:457 +0x48\ngithub.com/zeromicro/go-zero/core/logx.ErrorStack({0x140002dff58?, 0x1400010e000?, 0x0?})\n\t/Users/kevin/Develop/go/opensource/go-zero/core/logx/logs.go:113 +0x24\nmain.main()\n\t/Users/kevin/Develop/go/opensource/go-zero/adhoc/log/main.go:17 +0x80\n","level":"error"}
 ```
@@ -24,9 +27,9 @@ main.main()
 ","level":"error"}
 ```
 
-## From clipboard
+### 2. From clipboard
 
-### Steps
+#### Steps
 
 1. copy the content
 2. run `stack` without `-i`
@@ -44,3 +47,7 @@ main.main()
 	/Users/kevin/Develop/go/opensource/go-zero/adhoc/log/main.go:17 +0x80
 ","level":"error"}
 ```
+
+## Give a Star! ⭐
+
+If you like or are using this project to learn or start your solution, please give it a star. Thanks!
