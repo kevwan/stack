@@ -1,20 +1,43 @@
-use arboard::Clipboard;
 use std::env;
+use std::fs;
 use std::io::{self, BufRead};
 
+use arboard::Clipboard;
+
 fn main() {
-    let mut args = env::args();
-    if args.len() > 1 && args.nth(1).unwrap() == "-i" {
-        handle_stdin();
-    } else {
-        handle_clipboard();
-    }
+    let mut args = env::args().skip(1);
+    match args.len() {
+        0 => handle_clipboard(),
+        1 => {
+            let arg = args.next().unwrap();
+            match arg.as_str() {
+                "-i" => handle_stdin(),
+                _ => handle_file(arg),
+            };
+        }
+        _ => {
+            for arg in args {
+                println!("\x1b[92m=> {}\x1b[0m", arg);
+                handle_file(arg);
+            }
+        }
+    };
 }
 
 fn handle_clipboard() {
     let input = read_clipboard();
     let output = process_input(input);
     println!("{}", output);
+}
+
+fn handle_file(file: String) {
+    match fs::read_to_string(file) {
+        Ok(input) => {
+            let output = process_input(input);
+            println!("{}", output);
+        }
+        Err(e) => println!("Error: {}", e),
+    }
 }
 
 fn handle_stdin() {
