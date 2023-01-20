@@ -1,0 +1,11 @@
+[package]
+name = "stack"
+version = "0.1.0"
+authors = ["Kevin Wan <wanjunfeng@gmail.com>"]
+description = "A tool to convert json encoded stacktrace into human readable format"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+arboard = "2.1.0"
+clap = "4.1.1"
