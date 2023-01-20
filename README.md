@@ -31,7 +31,7 @@ main.main()
 1. copy the content
 2. run `stack` without `-i`
 
-```json
+```shell
 {"@timestamp":"2023-01-20T19:57:01.810+08:00","content":"panic
 goroutine 1 [running]:
 runtime/debug.Stack()
