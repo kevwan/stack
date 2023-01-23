@@ -8,18 +8,18 @@ fn main() {
     let mut args = env::args().skip(1);
     match args.len() {
         0 => handle_clipboard(),
-        1 => {
-            let arg = args.next().unwrap();
-            match arg.as_str() {
-                "-i" => handle_stdin(),
-                _ => handle_file(arg),
-            };
-        }
-        _ => {
-            for arg in args {
-                println!("\x1b[92m=> {}\x1b[0m", arg);
-                handle_file(arg);
+        1 => match args.next() {
+            Some(arg) => {
+                match arg.as_str() {
+                    "-i" => handle_stdin(),
+                    _ => handle_file(arg),
+                };
             }
+            None => handle_clipboard(),
+        }
+        _ => for arg in args {
+            println!("\x1b[92m=> {}\x1b[0m", arg);
+            handle_file(arg);
         }
     };
 }
@@ -42,9 +42,16 @@ fn handle_file(file: String) {
 
 fn handle_stdin() {
     for line in io::stdin().lock().lines() {
-        let input = line.unwrap();
-        let output = process_input(input);
-        println!("{}", output);
+        match line {
+            Ok(x) => {
+                let output = process_input(x);
+                println!("{}", output);
+            }
+            Err(e) => {
+                println!("Error: {}", e);
+                return;
+            }
+        };
     }
 }
 
